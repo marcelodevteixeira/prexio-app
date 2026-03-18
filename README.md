@@ -81,3 +81,5 @@ O Vercel detectará automaticamente que é um projeto Next.js e usará as config
 
 **Author:** Marcelo Teixeira
 
+.
+
