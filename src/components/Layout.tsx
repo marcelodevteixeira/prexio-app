@@ -21,7 +21,7 @@ export default function Layout({ children, activeTab, setActiveTab, user }: Layo
           <div className="bg-blue-500 p-2 rounded-xl shadow-lg shadow-blue-500/20">
             <ShoppingCart className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-xl font-semibold tracking-tight text-white">Prexio</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-white">PREXIO</h1>
         </div>
         {user && (
           <div className="flex items-center gap-2">

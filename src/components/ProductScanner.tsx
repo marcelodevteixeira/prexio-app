@@ -16,14 +16,10 @@ export function ProductScanner({ onClose, notifyPoints }: ProductScannerProps) {
 
   const simulateScan = () => {
     setScanning(false);
-    // Simulate a successful scan after 2 seconds
+    // Em um ambiente real, aqui faríamos a integração com a câmera do dispositivo
     setTimeout(() => {
-      setResult('success');
-      notifyPoints(10, 'Produto escaneado com sucesso!');
-      setTimeout(() => {
-        onClose();
-      }, 2000);
-    }, 2000);
+      setResult('error');
+    }, 1500);
   };
 
   React.useEffect(() => {
@@ -85,13 +81,13 @@ export function ProductScanner({ onClose, notifyPoints }: ProductScannerProps) {
               <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mb-4">
                 <AlertCircle className="w-10 h-10 text-red-400" />
               </div>
-              <h4 className="text-xl font-bold text-white mb-2">Produto não encontrado</h4>
-              <p className="text-slate-400 mb-6">Tente escanear novamente ou digite o código manualmente.</p>
+              <h4 className="text-xl font-bold text-white mb-2">Câmera não disponível</h4>
+              <p className="text-slate-400 mb-6">A integração com a câmera do dispositivo é necessária para escanear produtos reais.</p>
               <button 
-                onClick={() => { setScanning(true); setResult(null); simulateScan(); }}
+                onClick={onClose}
                 className="bg-slate-800 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-700 transition-colors"
               >
-                Tentar Novamente
+                Voltar
               </button>
             </motion.div>
           ) : null}

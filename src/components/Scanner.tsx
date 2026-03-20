@@ -26,7 +26,19 @@ export default function Scanner({ onScanResult, onClose, mode }: ScannerProps) {
       const html5QrCode = new Html5Qrcode("reader");
       scannerRef.current = html5QrCode;
 
-      const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+      const config = { 
+        fps: 10, 
+        qrbox: (viewfinderWidth: number, viewfinderHeight: number) => {
+          const minEdgePercentage = 0.7;
+          const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+          const qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
+          return {
+            width: qrboxSize,
+            height: qrboxSize
+          };
+        },
+        aspectRatio: 1.0
+      };
 
       const startScanner = (constraints: any) => {
         html5QrCode.start(
@@ -167,7 +179,7 @@ export default function Scanner({ onScanResult, onClose, mode }: ScannerProps) {
         </p>
       </div>
 
-      <div className="relative w-full aspect-square max-w-sm overflow-hidden rounded-3xl border-2 border-blue-500/50 shadow-2xl shadow-blue-500/20">
+      <div className="relative w-full aspect-square max-w-sm overflow-hidden rounded-3xl border-2 border-emerald-500/50 shadow-2xl shadow-emerald-500/20">
         {mode === 'ocr' ? (
           <>
             <video
@@ -178,11 +190,11 @@ export default function Scanner({ onScanResult, onClose, mode }: ScannerProps) {
             />
             <canvas ref={canvasRef} className="hidden" />
             <div className="absolute inset-0 border-[40px] border-black/40 pointer-events-none">
-              <div className="w-full h-full border-2 border-blue-400 rounded-lg" />
+              <div className="w-full h-full border-2 border-emerald-400 rounded-lg" />
             </div>
           </>
         ) : (
-          <div id="reader" className="w-full h-full" />
+          <div id="reader" className="w-full h-full [&>video]:object-cover" />
         )}
       </div>
 
@@ -190,7 +202,7 @@ export default function Scanner({ onScanResult, onClose, mode }: ScannerProps) {
         {mode === 'ocr' && isScanning && (
           <button
             onClick={captureAndOCR}
-            className="w-full bg-blue-500 text-white py-4 rounded-2xl font-semibold flex items-center justify-center gap-3 shadow-xl shadow-blue-500/30 active:scale-95 transition-transform"
+            className="w-full bg-emerald-500 text-white py-4 rounded-2xl font-semibold flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/30 active:scale-95 transition-transform"
           >
             <Camera className="w-6 h-6" />
             Capturar Preço
@@ -200,7 +212,7 @@ export default function Scanner({ onScanResult, onClose, mode }: ScannerProps) {
         {ocrProgress > 0 && ocrProgress < 1 && (
           <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-blue-500"
+              className="h-full bg-emerald-500"
               initial={{ width: 0 }}
               animate={{ width: `${ocrProgress * 100}%` }}
             />
